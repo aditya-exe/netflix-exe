@@ -1,91 +1,72 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
+import Banner from "@/components/banner";
+import Card from "@/components/card";
+import Navbar from "@/components/navbar";
+import SectionCard from "@/components/section-card";
+import { getPopularVideos, getVideos } from "@/lib/videos";
+import { m } from "@/lib/magic-client";
 
-const inter = Inter({ subsets: ['latin'] })
-
-export default function Home() {
+const Home = async () => {
+  const anime = await getVideos("anime");
+  const disney = await getVideos("disney");
+  const football = await getVideos("football");
+  const popular = await getPopularVideos();
+  // console.log(anime);
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+    <main className="pb-16">
+      {/* <Navbar /> */}
+      <Banner title="Manchester by the sea" subtitle="" imageUrl="/static/banner.webp" videoId="abs" />
+      <div className="mt-6">
+        <SectionCard title="Anime" videos={anime} size="large" />
+        <SectionCard title="Football" videos={football} size="small" />
+        <SectionCard title="Disney" videos={disney} size="medium" />
+        <SectionCard title="Anime" videos={popular} size="small" />
       </div>
     </main>
   )
 }
+
+export default Home;
+
+// <div className="border-2 border-blue-400 flex items-center justify-center rounded-md overflow-hidden">
+//                     <iframe id="ytplayer" width={"100%"} height={"360"} src={`https://www.youtube.com/embed/${videoId}/?autoplay=0&origin=http://example.com&controls=0&rel=1`}></iframe>
+//                   </div>
+//                   <div className="pt-6" />
+//                   <div className="grid grid-cols-2">
+//                     <div className="border-2 border-yellow-500">
+//                       <div className="p-2">
+//                         <span className="text-emerald-500 font-extrabold text-xl">{video.publishTime}</span>
+//                       </div>
+//                       <div className="p-2">
+//                         <p className="font-extrabold break-words text-xl">
+//                           {video.title}
+//                         </p>
+//                       </div>
+//                       <div className="p-2">
+//                         <p className="text-xl break-words font-extrabold">
+//                           {video.description}
+//                         </p>
+//                       </div>
+//                     </div>
+//                     <div className="border-2 border-green-500">
+//                       <div className="p-2">
+//                         <p className="space-x-1 text-xl font-extrabold">
+//                           <span className="text-gray-700">
+//                             Cast:
+//                           </span>
+//                           <span className="break-words">
+//                             {video.channelTitle}
+//                           </span>
+//                         </p>
+//                       </div>
+//                       <div className="p-2">
+//                         <p className="space-x-1 text-xl font-extrabold">
+//                           <span className="text-gray-700">
+//                             Viewcount:
+//                           </span>
+//                           <span>
+//                             {video.viewCount}
+//                           </span>
+//                         </p>
+//                       </div>
+//                     </div>
+//                   </div>
